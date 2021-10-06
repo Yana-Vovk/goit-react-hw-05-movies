@@ -1,5 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Container from './components/Container/Container';
+import AppBar from './components/AppBar/AppBar';
+import HomePage from './components/HomePage/HomePage';
+import Reviews from './views/Reviews';
+import Cast from './views/Cast';
+import MovieDetails from './views/MovieDetails';
+import MoviesPageView from './views/MoviesPageView';
 
 // API Key (v3 auth)
 // 9ee79cf45de55a8196583cb13968fce7
@@ -11,25 +18,36 @@ import './App.css';
 // IjoxfQ.qsNcWVuf6djECHrE - 769hRWk - wBKif93gsuI2v_6nrE
 
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Container>
+      <AppBar />
+      <Switch>
+        <Route path="/" exact>
+          <HomePage/>
+        </Route>
 
-export default App;
+        <Route path="/movies" exact>
+          <MoviesPageView/>
+        </Route>
+
+        <Route path="/movies/:movieId" exact>
+          <MovieDetails/>
+        </Route>
+
+        <Route path="/movies/:movieId/cast" exact>
+          <Cast/>
+        </Route>
+
+        <Route path="/movies/:movieId/reviews" exact>
+          <Reviews/>
+        </Route>
+
+        <Route>
+          <HomePage/>
+        </Route>
+      </Switch>
+    </Container>
+  );
+};
+

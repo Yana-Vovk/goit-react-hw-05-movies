@@ -1,0 +1,37 @@
+.GoBackButton {
+  margin: 10px;
+}
+
+.MovieContainer {
+  display: flex;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(85, 84, 84);
+}
+
+.MovieImageContainer {
+  margin-right: 15px;
+}
+
+.MovieName {
+  margin-left: 0;
+}
+
+.InformationContainer {
+  padding: 10px;
+  border-bottom: 2px solid rgb(85, 84, 84);
+}
+
+.InformationTitle {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.InformationLink {
+  display: block;
+}
+
+.InformationLink:not(:last-child) {
+  margin-bottom: 5px;
+}
