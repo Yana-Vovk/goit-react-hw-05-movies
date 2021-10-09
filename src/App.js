@@ -1,12 +1,18 @@
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import Container from './components/Container/Container';
 import AppBar from './components/AppBar/AppBar';
 import HomePage from './components/HomePage/HomePage';
-import Reviews from './views/Reviews';
-import Cast from './views/Cast';
-import MovieDetails from './views/MovieDetails';
-import MoviesPageView from './views/MoviesPageView';
+// import Reviews from './views/Reviews';
+// import Cast from './views/Cast';
+// import MovieDetails from './views/MovieDetails';
+// import MoviesPageView from './views/MoviesPageView';
+
+const Cast = lazy(() => import('./views/Cast.js' /*webpackChunkName:"cast"*/));
+const Reviews = lazy(() => import('./views/Reviews.js' /*webpackChunkName:"reviews"*/));
+const MovieDetails = lazy(() => import('./views/MovieDetails.js' /*webpackChunkName:"movieDetails"*/));
+const MoviesPageView = lazy(() => import('./views/MoviesPageView.js' /*webpackChunkName:"moviesPageView"*/));
 
 // API Key (v3 auth)
 // 9ee79cf45de55a8196583cb13968fce7
@@ -24,27 +30,35 @@ export default function App() {
       <AppBar />
       <Switch>
         <Route path="/" exact>
-          <HomePage/>
+          <HomePage />
         </Route>
 
         <Route path="/movies" exact>
-          <MoviesPageView/>
+          <Suspense fallback={<div>LOADING...</div>}>
+            <MoviesPageView />
+          </Suspense>
         </Route>
 
         <Route path="/movies/:movieId" exact>
-          <MovieDetails/>
+          <Suspense fallback={<div>LOADING...</div>}>
+            <MovieDetails />
+          </Suspense>
         </Route>
 
         <Route path="/movies/:movieId/cast" exact>
-          <Cast/>
+          <Suspense fallback={<div>LOADING...</div>}>
+            <Cast />
+          </Suspense>          
         </Route>
 
         <Route path="/movies/:movieId/reviews" exact>
-          <Reviews/>
+          <Suspense fallback={<div>LOADING...</div>}>
+            <Reviews />
+          </Suspense>          
         </Route>
 
         <Route>
-          <HomePage/>
+          <HomePage />
         </Route>
       </Switch>
     </Container>

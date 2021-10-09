@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import {
   NavLink,
   Switch,
@@ -12,8 +12,10 @@ import { getMovieDetails } from '../services/movies-api';
 
 import styles from './Movie.Module.css';
 
-import Cast from './Cast';
-import Reviews from './Reviews';
+// import Cast from './Cast';
+// import Reviews from './Reviews';
+const Cast = lazy(() => import('./Cast.js' /*webpackChunkName:"cast"*/));
+const Reviews = lazy(() => import('./Reviews.js' /*webpackChunkName:"reviews"*/));
 
 export default function MovieDetails() {
   const history = useHistory();
@@ -95,17 +97,19 @@ export default function MovieDetails() {
               </NavLink>
             </nav>
           </div>
-          <Suspense fallback={<h3>Loading</h3>}>
-            <Switch>
-              <Route path={`${path}/cast`} exact>
+          <Switch>
+            <Route path={`${path}/cast`} exact>
+              <Suspense fallback={<div>LOADING...</div>}>
                 <Cast />
-              </Route>
+              </Suspense>
+            </Route>
 
-              <Route path={`${path}/reviews`} exact>
+            <Route path={`${path}/reviews`} exact>
+              <Suspense fallback={<div>LOADING...</div>}>
                 <Reviews />
-              </Route>
-            </Switch>
-          </Suspense>
+              </Suspense>
+            </Route>
+          </Switch>
         </>
       )}
     </>
