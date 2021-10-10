@@ -10,39 +10,34 @@ export default function MoviesPageView() {
   const history = useHistory();
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState('');
+  const [query, setQuery] = useState(() => {
+    return new URLSearchParams(location.search).get('query') ?? '';
+  });
 
-  useEffect(() => {
-    if (search === '') {
-      return;
-    }
-    if (search) {
-      history.push({
-        ...location,
-        search: `?query=${search}`,
-      });
-    }
-    getSearchMovies(search).then(response => {
-      const fetchedMovies = response.data.results.map(movie => {
-        return {
-          movieId: movie.id,
-          movieName: movie.title ?? movie.name,
-        };
-      });
-      setMovies(prevState => [...prevState, ...fetchedMovies]);
-    });
-  }, [history, location, search]);
-
-  useEffect(() => {
-    if (location.search === '') {
-      return;
-    }
-    const param = new URLSearchParams(location.search).get('query');
-    setSearch(param);
-  }, [location.search]);
+  // useEffect(() => {
+  //   if (query === '') {
+  //     return;
+  //   }
+  //   getSearchMovies(query)
+  //     .then(respons => {
+  //       setMovies(respons.results);
+  //     })
+  //     .finally(() => {
+  //       setSearch('');
+  //     });
+  // }, [query]);
 
   const onSearchHandle = query => {
-    setSearch(query);
-    setMovies([]);
+    if (query === '') {
+      return;
+    }
+    getSearchMovies(query)
+      .then(respons => {
+        setMovies(respons.results);
+      })
+      .finally(() => {
+        setSearch('');
+      });
   };
 
   return (
