@@ -12,8 +12,6 @@ import { getMovieDetails } from '../services/movies-api';
 
 import styles from './Movie.Module.css';
 
-// import Cast from './Cast';
-// import Reviews from './Reviews';
 const Cast = lazy(() => import('./Cast.js' /*webpackChunkName:"cast"*/));
 const Reviews = lazy(() => import('./Reviews.js' /*webpackChunkName:"reviews"*/));
 
@@ -38,10 +36,7 @@ export default function MovieDetails() {
   }, [movieId]);
 
   const onGoBack = () => {
-    if (location?.state?.search) {
-      return history.push(`?query=${location?.state?.search}`);
-    }
-    history.push(location?.state?.from);
+    history.push(location?.state?.from ?? '/');
   };
 
   return (
