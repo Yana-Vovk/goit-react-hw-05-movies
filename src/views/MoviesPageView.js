@@ -10,9 +10,9 @@ export default function MoviesPageView() {
   const history = useHistory();
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState('');
-  const [query, setQuery] = useState(() => {
-    return new URLSearchParams(location.search).get('query') ?? '';
-  });
+  // const [query, setQuery] = useState(() => {
+  //   return new URLSearchParams(location.search).get('query') ?? '';
+  // });
 
   // useEffect(() => {
   //   if (query === '') {
@@ -39,6 +39,7 @@ export default function MoviesPageView() {
         setSearch('');
       });
   };
+
 
   return (
     <>

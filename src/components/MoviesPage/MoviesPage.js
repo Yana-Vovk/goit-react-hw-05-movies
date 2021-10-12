@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-// import PropTypes from 'prop-types';
 import styles from './MoviesPage.Module.css';
 import {getSearchMovies} from '../../services/movies-api.js';
 
@@ -11,9 +10,8 @@ export default function MoviesPage({ onSearch }) {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
 
-  // const [query, setQuery] = useState(() => {
-  //   return new URLSearchParams(location.search).get('query') ?? '';
-  // });
+  
+
   useEffect(()=>{
     const searchQuery = new URLSearchParams(location.search).get('query');
     
