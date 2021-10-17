@@ -3,13 +3,10 @@ import { useLocation, useHistory } from 'react-router-dom';
 import styles from './MoviesPage.Module.css';
 import {getSearchMovies} from '../../services/movies-api.js';
 
-export default function MoviesPage({ onSearch }) {
+export default function MoviesPage({ onChangeMovies }) {
   const [search, setSearch] = useState('');
   const location = useLocation();
   const history = useHistory();
-  const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState([]);
-
   
 
   useEffect(()=>{
@@ -18,9 +15,9 @@ export default function MoviesPage({ onSearch }) {
     if (!searchQuery) return;
 
   getSearchMovies(searchQuery).then(data => {
-    setMovies([...data.data.results]);
+    onChangeMovies([...data.data.results]);
   });
-  }, [location.search]);
+  }, []);
 
  
   const handleChange = event => {
@@ -29,13 +26,29 @@ export default function MoviesPage({ onSearch }) {
 
   const handleSubmit = event => {
     event.preventDefault();
+
     if (search.trim() === '') {
       return;
     }
-    setQuery(search.toLowerCase());
+
     history.push({ ...location, search: `query=${search.toLowerCase()}` });
-    onSearch(query);
+
+    onSearch(search.toLowerCase());
     reset();
+  };
+
+  const onSearch = query => {
+    if (query === '') {
+      return;
+    }
+
+    getSearchMovies(query)
+      .then(respons => {
+        onChangeMovies(respons.data.results);
+      })
+      .finally(() => {
+        setSearch('');
+      });
   };
 
   const reset = () => {
@@ -55,7 +68,3 @@ export default function MoviesPage({ onSearch }) {
     </form>
   );
 }
-
-// MoviesPage.propTypes = {
-//   onSearch: PropTypes.func,
-// };
