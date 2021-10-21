@@ -13,7 +13,9 @@ import { getMovieDetails } from '../services/movies-api';
 import styles from './Movie.Module.css';
 
 const Cast = lazy(() => import('./Cast.js' /*webpackChunkName:"cast"*/));
-const Reviews = lazy(() => import('./Reviews.js' /*webpackChunkName:"reviews"*/));
+const Reviews = lazy(() =>
+  import('./Reviews.js' /*webpackChunkName:"reviews"*/),
+);
 
 export default function MovieDetails() {
   const history = useHistory();
@@ -43,7 +45,11 @@ export default function MovieDetails() {
     <>
       {movie && (
         <>
-          <button type="button" className={styles.GoBackButton} onClick={onGoBack}>
+          <button
+            type="button"
+            className={styles.GoBackButton}
+            onClick={onGoBack}
+          >
             &#8678; Go Back
           </button>
           <div className={styles.MovieContainer}>
@@ -92,7 +98,17 @@ export default function MovieDetails() {
               </NavLink>
             </nav>
           </div>
-          <Switch>
+          <Suspense fallback={<div>LOADING...</div>}>
+            <Route
+              path={`${url}/cast`}
+              render={() => <Cast movieId={movieId} />}
+            />
+            <Route
+              path={`${url}/reviews`}
+              render={() => <Reviews movieId={movieId} />}
+            />
+          </Suspense>
+          {/* <Switch>
             <Route path={`${path}/cast`} exact>
               <Suspense fallback={<div>LOADING...</div>}>
                 <Cast />
@@ -104,7 +120,7 @@ export default function MovieDetails() {
                 <Reviews />
               </Suspense>
             </Route>
-          </Switch>
+          </Switch> */}
         </>
       )}
     </>
