@@ -99,28 +99,13 @@ export default function MovieDetails() {
             </nav>
           </div>
           <Suspense fallback={<div>LOADING...</div>}>
-            <Route
-              path={`${url}/cast`}
-              render={() => <Cast movieId={movieId} />}
-            />
-            <Route
-              path={`${url}/reviews`}
-              render={() => <Reviews movieId={movieId} />}
-            />
+            <Route path={`${path}/cast`}>
+              <Cast movieId={movieId} />
+            </Route>
+            <Route path={`${path}/reviews`}>
+              <Reviews movieId={movieId} />
+            </Route>
           </Suspense>
-          {/* <Switch>
-            <Route path={`${path}/cast`} exact>
-              <Suspense fallback={<div>LOADING...</div>}>
-                <Cast />
-              </Suspense>
-            </Route>
-
-            <Route path={`${path}/reviews`} exact>
-              <Suspense fallback={<div>LOADING...</div>}>
-                <Reviews />
-              </Suspense>
-            </Route>
-          </Switch> */}
         </>
       )}
     </>

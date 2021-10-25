@@ -6,10 +6,18 @@ import AppBar from './components/AppBar/AppBar';
 import HomePage from './components/HomePage/HomePage';
 
 const Cast = lazy(() => import('./views/Cast.js' /*webpackChunkName:"cast"*/));
-const Reviews = lazy(() => import('./views/Reviews.js' /*webpackChunkName:"reviews"*/));
-const MovieDetails = lazy(() => import('./views/MovieDetails.js' /*webpackChunkName:"movieDetails"*/));
-const MoviesPageView = lazy(() => import('./views/MoviesPageView.js' /*webpackChunkName:"moviesPageView"*/));
-const NotFoundView = lazy(() => import('./views/NotFoundView.js' /*webpackChunkName:"notFoundView"*/));
+const Reviews = lazy(() =>
+  import('./views/Reviews.js' /*webpackChunkName:"reviews"*/),
+);
+const MovieDetails = lazy(() =>
+  import('./views/MovieDetails.js' /*webpackChunkName:"movieDetails"*/),
+);
+const MoviesPageView = lazy(() =>
+  import('./views/MoviesPageView.js' /*webpackChunkName:"moviesPageView"*/),
+);
+const NotFoundView = lazy(() =>
+  import('./views/NotFoundView.js' /*webpackChunkName:"notFoundView"*/),
+);
 
 export default function App() {
   return (
@@ -26,23 +34,23 @@ export default function App() {
           </Suspense>
         </Route>
 
-        <Route path="/movies/:movieId" exact>
+        <Route path="/movies/:movieId">
           <Suspense fallback={<div>LOADING...</div>}>
             <MovieDetails />
           </Suspense>
         </Route>
 
-        <Route path="/movies/:movieId/cast" exact>
+        {/* <Route path="/movies/:movieId/cast" exact>
           <Suspense fallback={<div>LOADING...</div>}>
             <Cast />
-          </Suspense>          
+          </Suspense>
         </Route>
 
         <Route path="/movies/:movieId/reviews" exact>
           <Suspense fallback={<div>LOADING...</div>}>
             <Reviews />
-          </Suspense>          
-        </Route>
+          </Suspense>
+        </Route> */}
 
         <Route>
           <NotFoundView />
@@ -50,5 +58,4 @@ export default function App() {
       </Switch>
     </Container>
   );
-};
-
+}
